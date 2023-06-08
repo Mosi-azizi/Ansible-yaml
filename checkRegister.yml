@@ -1,0 +1,11 @@
+- name: check register command
+  hosts: appfw-rhel8
+  become: true
+
+  tasks:
+  - name: ls command
+    shell: ls -lrt /var
+    register: final_rep
+  - name: print
+    debug:
+      var: final_rep.stdout_lines

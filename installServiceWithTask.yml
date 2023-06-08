@@ -1,0 +1,7 @@
+- name: deploy service
+  hosts: appfw-rhel8
+  tasks:
+  - name: set task file and run service
+    include: taskInstallService.yml
+    vars:
+      package: samba

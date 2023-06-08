@@ -1,0 +1,25 @@
+- name: test tag and delegate
+  hosts: appfw-rhel8
+
+  tasks:
+  - name: install package
+    yum:
+      name: nginx
+      state: latest
+    tags: install
+    delegate_no: appfw-rhel8
+  - name: crate directory
+    file:
+      path: /tmp/start
+      state: directory
+      mode: 0777
+  - name: create file
+    file:
+      path: /tmp/start/
+      state: touch
+    tags: touch
+  - name: create dir1
+    file:
+      state: directory
+      path: /tmp/next
+      mode: 0766

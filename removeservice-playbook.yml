@@ -1,0 +1,7 @@
+- name: yum remove
+  hosts: appfw-rhel8
+  tasks:
+  - name: remove httpd service
+    yum:
+      name: httpd
+      state: absent

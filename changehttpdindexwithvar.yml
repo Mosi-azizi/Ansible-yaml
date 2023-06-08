@@ -1,0 +1,28 @@
+- name: customize httpd
+  hosts: appfw-rhel8
+  vars_files: var.yml
+  tasks:
+  - name: install service
+    yum:
+      name: "{{web_server}}"
+      state: latest
+  - name: copy index direcroty
+    copy:
+      src: "{{src}}"
+      dest: "{{dest}}"
+      remote_src: yes
+      directory_mode: yes
+  - name: start service
+    service :
+      name: "{{web_server}}"
+      state: started
+      enabled: yes
+  - name: add to firewalld
+    firewalld:
+      service: http
+      state: enabled
+      permanent: yes
+  - name: restart firewalld
+    service:
+      name: firewalld
+      state: restarted

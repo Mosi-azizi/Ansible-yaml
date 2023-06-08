@@ -1,0 +1,21 @@
+- name: deploy service
+  hosts: appfw-rhel8
+  become: true
+  vars:
+    package: nginx
+  tasks:
+  - name: set taskSopSelinux
+    include: taskStopSelinux.yml
+  - name: set taskStopFirewalld
+    include: taskStopFirewalld.yml
+  - name: install serivce {{ package }}
+    yum:
+      name: "{{package}}"
+      state: latest
+  - name: start {{ package }}
+    service:
+      name: "{{package}}"
+      state: started
+  - name: status {{ package }}
+    command: systemctl status "{{package}}"
+    register: final

@@ -1,0 +1,10 @@
+- name: copy file from remote-src to remote-src
+  hosts: appfw-rhel8
+  become: true
+  tasks:
+  - name: cpfile
+    copy:
+      src: /tmp/test/session5/playbook-mkdir.yml
+      dest: /tmp/plb.yml
+      mode: 0755
+      remote_src: yes

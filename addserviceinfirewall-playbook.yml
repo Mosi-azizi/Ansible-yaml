@@ -1,0 +1,21 @@
+- name: install webserver
+  hosts: appfw-rhel8
+  tasks:
+  - name: install apache
+    yum:
+      name: httpd
+      state: present
+  - name: start service httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+  - name: open port on the fiewalld
+    firewalld:
+      service: http
+      state: enabled
+      permanent: true
+  - name: restart firewalld
+    service:
+      name: firewalld
+      state: restarted

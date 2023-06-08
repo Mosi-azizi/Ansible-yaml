@@ -1,0 +1,27 @@
+- name: customize httpd
+  hosts: appfw-rhel8
+  tasks:
+  - name: install http service
+    yum:
+      name: httpd
+      state: latest
+  - name: copy index
+    copy:
+      src: /root/Downloads/
+      dest: /var/www/html/
+      remote_src: yes
+      directory_mode: yes
+  - name: start service
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+  - name: add to filewalld
+    firewalld:
+      service: http
+      state: enabled
+      permanent: true
+  - name: restart firewalld
+    service:
+      name: firewalld
+      state: restarted

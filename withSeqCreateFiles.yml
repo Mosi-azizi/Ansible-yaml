@@ -1,0 +1,9 @@
+- name: create sequence files
+  hosts: appfw-rhel8
+
+  tasks:
+  - name:
+    file:
+      path: /tmp/stat{{ item }}
+      state: touch
+    with_sequence: start=10 end=20 stride=2

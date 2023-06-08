@@ -1,0 +1,13 @@
+- name: create files by with_items
+  hosts: appfw-rhel8
+
+  tasks:
+  - name: create files
+    file:
+      path: /tmp/{{ item.name }}
+      owner: "{{item.owner}}"
+      mode: "{{item.mode}}"
+      state: touch
+    with_items:
+      - { name: 'file1', owner: 'root', mode: '755' }
+      - { name: 'file2', owner: 'appfw', mode: '600' }

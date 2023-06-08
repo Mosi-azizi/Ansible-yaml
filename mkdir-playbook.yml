@@ -1,0 +1,15 @@
+- name: create directory and copy file
+  hosts: appfw-rhel8
+  become: true
+  tasks:
+    - name : create directory
+      file:
+        state: directory
+        path: /tmp/test/session5
+        recurse: yes
+        mode: 0755
+    - name: copy file into this directory
+      copy:
+        src: /tmp/filename.txt
+        dest: /tmp/test/session5
+        mode: 0444
